@@ -1,0 +1,23 @@
+.nav-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar ul li{
+    display: inline;
+    padding: 5%;
+   
+}
+
+.nav-bar ul li a:link{
+    text-decoration: none;
+}
+
+
+.connect-img{
+    margin-left: 30%;
+    display: flex;
+    max-width: 100px;
+    height: auto
+}
