@@ -38,8 +38,7 @@ exports.userLogin = (req,res,next)=>{
                     return res.status(400).json({message:"Something went wrong!!",success:false})
                 }
                 if(response){
-                    const jwtToken = generateToken(users[0].id)
-                    return res.json({token:jwtToken,success:true,message:'Logged in Successfully'})
+                    return res.status(200).json({success:true})
                 }else{
                     return res.status(401).json({message:"Wrong password! Please enter correct password...!"})
                 }

@@ -7,10 +7,6 @@ const container = document.getElementById('container');
 
 opan.addEventListener('click', ()=>{
     container.classList.add('active');
-
-    
-    
-    
 });
 
 close.addEventListener('click', ()=>{
@@ -34,7 +30,7 @@ window.addEventListener('load',()=>{
         getMessageFromLocal();
     }
 
-    // userGroups();
+     userGroups();
 
     setInterval(()=>{
     updateMessage();
@@ -161,164 +157,159 @@ function updateMessage(){
         }
     })
     .catch(err=>{
+        alert(err)
+      
+    })
+}
+
+function createGroup(e){
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+
+    const grpName = {
+        groupName: form.get('groupname').value,
+        isAdmin: true
+    }
+    console.log(grpName);
+    axios.post('http://localhost:4000/group/creategroup',grpName,{headers:{authanticate:token}})
+    .then(response=>{
+        console.log(response);
+        if(response.status === 201){
+            document.getElementById('groupname-input').value = "";
+            alert(response.data.message)
+    }
+    })
+    .catch(err=>{
         console.log(err);
+        alert(err.response.data.message)
         if(err.response.status===404){
             console.log(err);
-        }else{
-            console.log(err);
+        }
+    })
+
+    
+}
+
+function addMemberToGroup(e){
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+
+    const member = {
+        memberEmail: form.get('member'),
+        groupId: form.get('groupID')
+    }
+    console.log(member);
+    axios.post('http://localhost:4000/group/addmember',member,{headers:{authanticate:token}})
+    .then(response=>{
+        if(response.status ===201){
+            document.getElementById('groupname-input').value = "";
+            alert(response.data.message)
+        }
+    })
+    .catch(err=>{
+        console.log(err);
+        alert(err.response.data.message)
+        if(err.response.status===404){
+            window.location.href="../404.html"
         }
     })
 }
 
-// function createGroup(e){
-//     e.preventDefault();
 
-//     const form = new FormData(e.target);
+async function userGroups(){
+    try {
+        const allGrpDetails = await axios.get('http://localhost:4000/group/name',{headers:{authanticate:token}})
+        const list = (allGrpDetails.data.allgroupName)
+        list.forEach(element => {
+            const parentElement = document.getElementById('groups-list')
+            parentElement.innerHTML += `
+            <li id=${element.id}> 
+            <button onclick="showGrpMsg(${element.id})">${element.groupName}</button>
+            </li>`
+        });
 
-//     const grpName = {
-//         groupName: form.get('groupname'),
-//         isAdmin: true
-//     }
-//     console.log(grpName);
-//     axios.post('http://localhost:4000/group/creategroup',grpName,{headers:{authanticate:token}})
-//     .then(response=>{
-//         console.log(response);
-//         if(response.status === 201){
-//             document.getElementById('groupname-input').value = "";
-//             alert(response.data.message)
-//     }
-//     })
-//     .catch(err=>{
-//         console.log(err);
-//         alert(err.response.data.message)
-//         if(err.response.status===404){
-//             console.log(err);
-//         }
-//     })
-
-    
-// }
-
-// function addMemberToGroup(e){
-//     e.preventDefault();
-
-//     const form = new FormData(e.target);
-
-//     const member = {
-//         memberEmail: form.get('member'),
-//         groupId: form.get('groupID')
-//     }
-//     console.log(member);
-//     axios.post('http://localhost:4000/group/addmember',member,{headers:{authanticate:token}})
-//     .then(response=>{
-//         if(response.status ===201){
-//             document.getElementById('groupname-input').value = "";
-//             alert(response.data.message)
-//         }
-//     })
-//     .catch(err=>{
-//         console.log(err);
-//         alert(err.response.data.message)
-//         if(err.response.status===404){
-//             window.location.href="../404.html"
-//         }
-//     })
-// }
-
-
-// async function userGroups(){
-//     try {
-//         const allGrpDetails = await axios.get('http://localhost:4000/group/name',{headers:{authanticate:token}})
-//         const list = (allGrpDetails.data.allgroupName)
-//         list.forEach(element => {
-//             const parentElement = document.getElementById('groups-list')
-//             parentElement.innerHTML += `
-//             <li id=${element.id}> 
-//             <button onclick="showGrpMsg(${element.id})">${element.groupName}</button>
-//             </li>`
-//         });
-
-//     } catch (error) {
-//         console.log(error);
-//         alert(error.response.data.message)
-//         if(error.response.status===404){
+    } catch (error) {
+        console.log(error);
+       alert(error);
            
-//         }
-//     }
-// }
+        }
+    }
 
-// async function showGrpMsg(id){
-//     try {
-//         const grpMessages = await axios.get(`http://localhost:4000/group/getchat?id=${id}`,{headers:{authanticate:token}});
 
-//         const textsArr = grpMessages.data.messages;
+async function showGrpMsg(id){
+    try {
+        const grpMessages = await axios.get(`http://localhost:4000/group/getchat?id=${id}`,{headers:{authToken:token}});
 
-//         const parentElement = document.getElementById('message');
-//         const userElement = document.getElementById('user');
-//         const form = document.getElementById("input-area")
-//         form.innerHTML = "";
-//         userElement.innerHTML = " ";
-//         parentElement.innerHTML = " ";
-//         const msgForm = document.createElement('form');
-//         let fn = "return myfunc(event)"
-//         msgForm.setAttribute('onSubmit',fn);
+        const textsArr = grpMessages.data.messages;
+
+        const parentElement = document.getElementById('message');
+        const userElement = document.getElementById('user');
+        const form = document.getElementById("input-area")
+        form.innerHTML = "";
+        userElement.innerHTML = " ";
+        parentElement.innerHTML = " ";
+        const msgForm = document.createElement('form');
+        let fn = "return myfunc(event)"
+        msgForm.setAttribute('onSubmit',fn);
         
-//         textsArr.forEach(element => {
-//             parentElement.innerHTML += `
-//             <li id=${element.id}>
-//                 ${element.senderName}: ${element.message}
-//             </li>`
+        textsArr.forEach(element => {
+            parentElement.innerHTML += `
+            <li id=${element.id}>
+                ${element.senderName}: ${element.message}
+            </li>`
 
-//         });
-//         let input = document.createElement('input');
-//         let hidden = document.createElement('input');
-//         hidden.name = "grp-id";
-//         hidden.type = "hidden";
-//         hidden.value = `${id}`
-//         input.name = 'message';
-//         input.type = 'text';
-//         input.setAttribute("id","text-input");
-//         input.setAttribute("placeholder","Type Message For Group...");
-//         let button = document.createElement('button');
-//         button.type = 'submit';
-//         button.innerHTML = "Send"
-//         button.na
-//         button.className = "fas fa-paper-plane";
-//         msgForm.appendChild(input);
-//         msgForm.appendChild(hidden);
-//         msgForm.appendChild(button);
-//         form.appendChild(msgForm);
-//         // console.log(textsArr);
-//     } catch (error) {
-//         console.log(error);
-//         if(error.response.status===404){
-//             console.log(error);
-//     }
+        });
+        let input = document.createElement('input');
+        let hidden = document.createElement('input');
+        hidden.name = "grp-id";
+        hidden.type = "hidden";
+        hidden.value = `${id}`
+        input.name = 'message';
+        input.type = 'text';
+        input.setAttribute("id","text-input");
+        input.setAttribute("placeholder","Type Message For Group...");
+        let button = document.createElement('button');
+        button.type = 'submit';
+        button.innerHTML = "Send"
+        button.na
+        button.className = "fas fa-paper-plane";
+        msgForm.appendChild(input);
+        msgForm.appendChild(hidden);
+        msgForm.appendChild(button);
+        form.appendChild(msgForm);
+        // console.log(textsArr);
+    } catch (error) {
+        console.log(error);
+        if(error.response.status===404){
+            console.log(error);
+    }
 
-// }
+}
 
-// async function myfunc(e){
-//     try {
-//         e.preventDefault();
+async function myfunc(e){
+    try {
+        e.preventDefault();
     
-//     const form = new FormData(e.target);
+    const form = new FormData(e.target);
 
-//     const message = {
-//         // message: form.get('message'),
-//         message: undefined,
-//         groupId: form.get('grp-id')
-//     }
-//     // console.log(message);
+    const message = {
+        // message: form.get('message'),
+        message: undefined,
+        groupId: form.get('grp-id')
+    }
+    // console.log(message);
 
-//     const grpchat = await axios.post('http://localhost:4000/group/sendchat',message,{headers:{authanticate:token}})
-//     if(grpchat){
-//         const messageDetail = grpchat.data.messages;
-//         addMsgToDOM(messageDetail.message,messageDetail.senderName);
-//     }
-//     } catch (error) {
-//         console.log(error);
-//         if(error.response.status===404){
-//             console.log(err);
-//         }
-//     }
-// }}
+    const grpchat = await axios.post('http://localhost:4000/group/sendchat',message,{headers:{authanticate:token}})
+    if(grpchat){
+        const messageDetail = grpchat.data.messages;
+        addMsgToDOM(messageDetail.message,messageDetail.senderName);
+    }
+    } catch (error) {
+        console.log(error);
+        if(error.response.status===404){
+            console.log(err);
+        }
+    }
+}}

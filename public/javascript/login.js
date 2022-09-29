@@ -11,7 +11,7 @@ function login(e){
     .then(res=>{
 
         if(res.status === 200){
-            localStorage.setItem('authToken',res.data.token);
+            localStorage.setItem('authToken',`${res.data.token}`);
             window.location.href = "userHome.html"
         }
         
