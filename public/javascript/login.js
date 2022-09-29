@@ -1,20 +1,23 @@
-function login(event){
-    event.preventDefault();
+function login(e){
+    e.preventDefault();
 
     const userDetails = {
-        name: document.getElementById('email').value,
+        email: document.getElementById('email').value,
         password: document.getElementById('password').value
     }
     console.log(userDetails);
 
-    axios.get('http://localhost:4000/user/login',userDetails)
+    axios.post('http://localhost:4000/user/login',userDetails)
     .then(res=>{
-        if(res.status ===200){
-            res.setItem('authToken', res.data.token)
+
+        if(res.status === 200){
+            localStorage.setItem('authToken',res.data.token);
+            window.location.href = "../public/views/userHome.html"
         }
+        
     })
 
-    .catch(err=>{
+    .catch((err)=>{
         console.log(err);
     })
 }
