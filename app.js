@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const dotenv = require('dotenv');
 
-const bodyparser = require('body-parser');
+//const bodyparser = require('body-parser');
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(express.json());
 
 //DB calls from app.js or main file
 const sequelize = require('./util/database');
-const User = require('./models/users');
+//const User = require('./models/users');
 
 
 //Routers
@@ -26,7 +26,8 @@ const userRoutes = require('./routes/user');
 
 app.use('/user',userRoutes);
 
-sequelize.sync()
+sequelize
+.sync()
 .then(()=>{
     app.listen(4000);
 })

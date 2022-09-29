@@ -1,10 +1,10 @@
 const jwt =require('jsonwebtoken');
 
-const User =  require('../models/users');
+const User =  require('../models/user');
 
 exports.auth = (req,res,next) =>{
     const token = req.header('authToken');
-    console.log(token,"authen");
+    console.log(token,"authToken");
 
    try{
     const userId = Number(jwt.verify(token, process.env.JWT_TOKEN_SECRET));
