@@ -12,7 +12,7 @@ function login(e){
 
         if(res.status === 200){
             localStorage.setItem('authToken',res.data.token);
-            window.location.href = "../public/views/userHome.html"
+            window.location.href = "userHome.html"
         }
         
     })
