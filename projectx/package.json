@@ -1,0 +1,30 @@
+{
+  "name": "groupchat-backend",
+  "version": "1.0.0",
+  "description": "groupchatApp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itspunitmehta/groupChat.git"
+  },
+  "author": "Punit Mehta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itspunitmehta/groupChat/issues"
+  },
+  "homepage": "https://github.com/itspunitmehta/groupChat#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.16",
+    "sequelize": "^6.19.0"
+  }
+}

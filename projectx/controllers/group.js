@@ -5,11 +5,6 @@ const {Op} = require('sequelize');
 const Message = require('../models/message');
 
 
-
-
-// algo:   1. get the userId and groupName and isAdmin
-//         2. after colleceting groupName update the DB with group Name
-//         3. now sent the status codes
 exports.createGroup = async (req,res,next) => {
     try {
         const userId = req.user.id;
@@ -25,11 +20,6 @@ exports.createGroup = async (req,res,next) => {
         return res.status(401).json({message:'something went wrorng',success:false,err:error})
     }
 }
-
-// algo:   1. collect email and groupId
-//         2. search in DB if user exits already, if not add to DB, sent status getComputedStyle
-//         3. now for adding to group , collect userId and check if that user belongs to group or not
-//            (findByPK), if not : send the status code or add to  groupTable DB
 
 exports.addMember = async (req,res,next) => {
     try {
@@ -56,15 +46,6 @@ exports.addMember = async (req,res,next) => {
     }
 }
 
-
-// algo :  1. create  an array to store which gorup the member BelongsTo
-//         2. collect the values from groupTable DB
-//         3. if groupTable has any values push the values to array created step 1
-
-//         simiultaneously sent the http codes
-
-
-
 exports.userGroup = async(req,res,next)=>{
     try {
         let allGrpId = [];
@@ -86,9 +67,6 @@ exports.userGroup = async(req,res,next)=>{
     }
 }
 
-
-// algo:   1. get groupID and message
-//         2. return status codes on success and failure , use async await try catch
 exports.getGroupChat = async(req,res,next)=>{
     try {
         const groupId = req.query.id;
@@ -98,12 +76,6 @@ exports.getGroupChat = async(req,res,next)=>{
         res.status(401).json({error})
     }
 }
-
-
-// algo:   1. collect senderName, thr gourpID and message
-//         2. now store the value collected in step 1 in cont message
-//         3. send the status codes
-
 
 exports.postToGroup = async(req,res,next)=>{
     try {

@@ -1,0 +1,84 @@
+.container .form .signup-form h3{
+    text-align: center;
+    font-size: 70px;
+}
+
+.signup-form input[type=text]{
+    width: 25%;
+    padding: 5px 0px 10px 10px;
+    margin-bottom: 3%;
+    margin-left: 3%;
+}
+.signup-form input[type=password]{
+    width: 25%;
+    padding: 5px 0px 10px 10px;
+    margin-bottom: 3%;
+    margin-left: 1.7%;
+}
+
+.signup-form {
+   justify-content: center;
+   justify-items: center;
+   text-align: center;
+  
+}
+
+#submit-signup-btn{
+    text-align: center;
+    
+    justify-content: center;
+}
+
+/**navbar css here**/
+ .nav-bar{
+    background-color: #363945;
+    color: aliceblue;
+    width: 100%;
+    height: 51px;
+    
+}
+
+.nav-bar a > img{
+    width: 55px;
+    height: auto;
+}
+
+
+.nav-bar ul {
+    
+    list-style-type: none;
+    margin: -40px;
+    padding-left: 150px;
+    
+    
+    overflow: hidden;
+}
+
+
+
+.nav-bar ul li{
+    display: inline;
+    margin-top: 0px;
+    margin-left: 150px;
+    
+    
+    
+   
+}
+
+.nav-bar ul li a{
+    text-decoration: none;
+    color: aliceblue;
+   
+    text-align: center;
+   
+    display: inline-flex;
+   
+
+}
+ 
+.nav-bar ul li a:hover {
+    background-color: #111;
+  }
+
+  /**navbar css ended here**/

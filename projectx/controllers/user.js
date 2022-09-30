@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
-exports.userSignUp = (req,res,next)=>{
+exports.userSignup = (req,res,next)=>{
     const {name,email,phone,password} = req.body;
     // console.log(name,"huhw");
     const saltround = 10;
@@ -38,7 +38,8 @@ exports.userLogin = (req,res,next)=>{
                     return res.status(400).json({message:"Something went wrong!!",success:false})
                 }
                 if(response){
-                    return res.status(200).json({success:true})
+                    const jwtToken = generateToken(users[0].id)
+                    return res.json({token:jwtToken,success:true,message:'Logged in Successfully'})
                 }else{
                     return res.status(401).json({message:"Wrong password! Please enter correct password...!"})
                 }
@@ -53,6 +54,6 @@ exports.userLogin = (req,res,next)=>{
     })
 }
 
-// function generateToken(id){
-//     return jwt.sign(id, process.env.JWT_TOKEN_SECRET)
-// }
+function generateToken(id){
+    return jwt.sign(id, process.env.JWT_TOKEN_SECRET)
+}
