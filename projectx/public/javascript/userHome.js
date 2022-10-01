@@ -37,7 +37,7 @@ window.addEventListener('load',()=>{
 
 
 function showGroupMembers(){
-    axios.get('http://localhost:4000/chat/join',{headers:{authanticate:token}})
+    axios.get('c',{headers:{authanticate:token}})
     .then(response=>{
         if(response.status===200){
             response.data.listOfUser.forEach(user => {
