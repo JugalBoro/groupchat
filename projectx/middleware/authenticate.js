@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 exports.authenticateUser = (req,res,next)=>{
     const token = req.header('authanticate')
-    // console.log(token, "auth");
+     console.log(token, "auth");
     try {
         const userId = Number(jwt.verify(token,process.env.JWT_TOKEN_SECRET))
         // console.log(userId,'userid')
